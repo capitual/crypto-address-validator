@@ -46047,6 +46047,7 @@ const HBARValidator = require('./hbar_validator')
 const STXValidator = require('./stx_validator')
 const ALGOValidator = require('./algo_validator')
 const BCHValidator = require('./bitcoincash_validator')
+const SYSValidator = require('./sys_validator')
 
 // defines P2PKH and P2SH address types for standard (prod) and testnet networks
 const CURRENCIES = [{
@@ -46510,8 +46511,8 @@ const CURRENCIES = [{
 }, {
   name: 'Syscoin',
   symbol: 'sys',
-  addressTypes: { prod: ['00', '3f'] },
-  validator: BTCValidator
+  addressTypes: { prod: ['3f'] },
+  validator: SYSValidator
 }, {
   name: 'Populous',
   symbol: 'ppt',
@@ -46653,7 +46654,7 @@ module.exports = {
   CURRENCIES
 }
 
-},{"./ae_validator":273,"./algo_validator":274,"./ardr_validator":275,"./atom_validator":276,"./aud_validator":277,"./bitcoin_validator":278,"./bitcoincash_validator":279,"./bnb_validator":280,"./bts_validator":281,"./cardano_validator":282,"./eos_validator":293,"./ethereum_validator":294,"./hbar_validator":295,"./icx_validator":296,"./iost_validator":297,"./iota_validator":298,"./lisk_validator":299,"./lumen_validator":300,"./monero_validator":301,"./nano_validator":302,"./nem_validator":303,"./nxs_validator":304,"./ripple_validator":305,"./sc_validator":306,"./steem_validator":307,"./stx_validator":308,"./xtz_validator":310,"./zil_validator":311}],293:[function(require,module,exports){
+},{"./ae_validator":273,"./algo_validator":274,"./ardr_validator":275,"./atom_validator":276,"./aud_validator":277,"./bitcoin_validator":278,"./bitcoincash_validator":279,"./bnb_validator":280,"./bts_validator":281,"./cardano_validator":282,"./eos_validator":293,"./ethereum_validator":294,"./hbar_validator":295,"./icx_validator":296,"./iost_validator":297,"./iota_validator":298,"./lisk_validator":299,"./lumen_validator":300,"./monero_validator":301,"./nano_validator":302,"./nem_validator":303,"./nxs_validator":304,"./ripple_validator":305,"./sc_validator":306,"./steem_validator":307,"./stx_validator":308,"./sys_validator":309,"./xtz_validator":311,"./zil_validator":312}],293:[function(require,module,exports){
 function isValidEOSAddress (address, currency, networkType) {
   var regex = /^[a-z0-9]+$/g // Must be numbers and lowercase letters only
   if (address.search(regex) !== -1 && address.length === 12) {
@@ -47065,6 +47066,16 @@ module.exports = {
 }
 
 },{"c32check":96}],309:[function(require,module,exports){
+const btcValidator = require('./bitcoin_validator')
+var regexp = new RegExp('^sys1[qpzry9x8gf2tvdw0s3jn54khce6mua7l]{39}$')
+
+module.exports = {
+  isValidAddress: function (address, currency, networkType) {
+    return regexp.test(address) || btcValidator.isValidAddress(address, currency, networkType)
+  }
+}
+
+},{"./bitcoin_validator":278}],310:[function(require,module,exports){
 var currencies = require('./currencies')
 
 var DEFAULT_CURRENCY_NAME = 'bitcoin'
@@ -47098,7 +47109,7 @@ module.exports = {
   CURRENCIES: currencies.CURRENCIES
 }
 
-},{"./currencies":292}],310:[function(require,module,exports){
+},{"./currencies":292}],311:[function(require,module,exports){
 var base58 = require('./crypto/base58')
 
 function getDecoded (address) {
@@ -47122,7 +47133,7 @@ module.exports = {
   }
 }
 
-},{"./crypto/base58":283}],311:[function(require,module,exports){
+},{"./crypto/base58":283}],312:[function(require,module,exports){
 var utils = require('./crypto/utils')
 
 const ALLOWED_CHARS = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l'
@@ -47149,5 +47160,5 @@ module.exports = {
   }
 }
 
-},{"./crypto/utils":291}]},{},[309])(309)
+},{"./crypto/utils":291}]},{},[310])(310)
 });
